@@ -18,17 +18,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
- * [CarListFragment] je fragment, ktorý zobrazuje zoznam áut.
+ * [AutoListFragment] je fragment, ktorý zobrazuje zoznam áut.
  *
  * Využíva [CarAdapter] pre RecyclerView a spracuváva akcie používateľského rozhrania z RecyclerView.
  *
  * @property carDatabase Databáza používaná na ukladanie a získavanie informácií o autách.
  * @property carAdapter Adaptér používaný na zobrazenie áut v RecyclerView.
  */
-class CarListFragment : Fragment(), OnCarClickListener {
+class AutoListFragment : Fragment(), OnCarClickListener {
 
     private lateinit var carDatabase: AutoDatabaza
-    private lateinit var carAdapter: CarAdapter
+    private lateinit var carAdapter: AutoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,13 +43,13 @@ class CarListFragment : Fragment(), OnCarClickListener {
         carDatabase = AutoDatabaza.getDatabase(requireContext())
 
         val carRecyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        carAdapter = CarAdapter(emptyList(), this)
+        carAdapter = AutoAdapter(emptyList(), this)
         carRecyclerView.adapter = carAdapter
         carRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val addCarButton: Button = view.findViewById(R.id.fab_add_car)
         addCarButton.setOnClickListener {
-            Log.d("CarListFragment", "Button clicked")
+            Log.d("AutoListFragment", "Button clicked")
             findNavController().navigate(R.id.action_carList_to_pridanieVozidla)
 
 

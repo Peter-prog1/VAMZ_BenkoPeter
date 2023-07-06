@@ -17,15 +17,15 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
 /**
- * [CarStatusAdapter] je adaptér RecyclerView na zobrazenie stavu áut.
+ * [AutoStatusAdapter] je adaptér RecyclerView na zobrazenie stavu áut.
  *
  * @property autos Zoznam áut, ktoré sa majú zobraziť.
  * @property carDatabase Databáza na získavanie záznamov o údržbe.
  */
-class CarStatusAdapter(
+class AutoStatusAdapter(
     private val autos: List<Auto>,
     private val carDatabase: AutoDatabaza
-) : RecyclerView.Adapter<CarStatusAdapter.CarStatusViewHolder>() {
+) : RecyclerView.Adapter<AutoStatusAdapter.CarStatusViewHolder>() {
 
     /**
      * [CarStatusViewHolder] obsahuje zobrazenia pre každú položku stavu auta v RecyclerView.

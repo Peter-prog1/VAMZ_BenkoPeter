@@ -18,7 +18,7 @@ import kotlinx.coroutines.*
 class StatusVozidielFragment : Fragment() {
 
     private lateinit var carDatabase: AutoDatabaza
-    private lateinit var carStatusAdapter: CarStatusAdapter
+    private lateinit var autoStatusAdapter: AutoStatusAdapter
     private lateinit var rvCarStatusList: RecyclerView
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val ioScope = CoroutineScope(Dispatchers.IO)
@@ -43,8 +43,8 @@ class StatusVozidielFragment : Fragment() {
         ioScope.launch {
             val cars = carDatabase.autoDao().getAllCars()
             uiScope.launch {
-                carStatusAdapter = CarStatusAdapter(cars, carDatabase)
-                rvCarStatusList.adapter = carStatusAdapter
+                autoStatusAdapter = AutoStatusAdapter(cars, carDatabase)
+                rvCarStatusList.adapter = autoStatusAdapter
             }
         }
     }
