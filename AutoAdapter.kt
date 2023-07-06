@@ -38,14 +38,14 @@ interface OnCarClickListener {
     fun onEditCarClicked(carId: Int)
 }
 /**
- * Táto trieda je Adapter pre RecyclerView v `CarListFragment`.
+ * Táto trieda je Adapter pre RecyclerView v `AutoListFragment`.
  * Obsahuje zoznam „Áut“ a odosiela akcie používateľského rozhrania do fragmentu prostredníctvom nástroja
  * „OnCarClickListener“.
  */
-class CarAdapter(
+class AutoAdapter(
     private var autos: List<Auto>,
     private val onAddMaintenanceClickListener: OnCarClickListener
-) : RecyclerView.Adapter<CarAdapter.CarViewHolder>() {
+) : RecyclerView.Adapter<AutoAdapter.CarViewHolder>() {
 
 
     inner class CarViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
