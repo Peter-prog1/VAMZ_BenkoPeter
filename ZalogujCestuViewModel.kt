@@ -18,13 +18,13 @@ import kotlinx.coroutines.launch
 class ZalogujCestuViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedCar = MutableLiveData<Auto>()
     private val carDatabase = AutoDatabaza.getDatabase(application)
-    private val _cars = MutableLiveData<List<Auto>>()
-    val cars: LiveData<List<Auto>> get() = _cars
+    private var _cars: List<Auto> = listOf()
+    val cars: LiveData<List<Auto>> = carDatabase.autoDao().getAllCarsLive()
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val allCars = carDatabase.autoDao().getAllCars()
-            _cars.postValue(allCars)
+            _cars = carDatabase.autoDao().getAllCars()
         }
     }
 

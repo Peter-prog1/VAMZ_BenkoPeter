@@ -12,30 +12,21 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 
-/**
- * [ZalogujCestuFragment]  Fragment ktorý poskytuje rozhranie na zaznamenávanie jazdy auta.
- * Predstavuje formulár, kde môže používateľ zadať prejdené kilometre a spotrebované palivo.
- * Tieto údaje sa zapíšu do databázy spolu s vypočítanou spotrebou.
- */
 class ZalogujCestuFragment : Fragment() {
 
-    private val viewModel: ZalogujCestuViewModel by activityViewModels<ZalogujCestuViewModel>()
+    private val viewModel: ZalogujCestuViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_log_journey, container, false)
         return view
     }
 
-
-
-    /**
-     * Nastaví formulár a spracuje údaje z formulára. Metóda kontroluje platnosť vstupu a ak je platný,
-     * zavolá [ZalogujCestuViewModel.logJourney] na uloženie údajov o ceste do databázy.
-     *
-     * @param view Inštancia zobrazenia.
-     * @param SaveInstanceState Akýkoľvek predtým uložený stav, ktorý sa má obnoviť.
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,31 +41,24 @@ class ZalogujCestuFragment : Fragment() {
             carSpinner.setSelection(savedState.getInt("spinnerPosition"))
         }
 
-        viewModel.cars.observe(viewLifecycleOwner) { cars ->
-
-            val carNames =
-                cars.map { it.toString() }
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, carNames)
+        viewModel.cars.observe(viewLifecycleOwner, Observer { cars ->
+            val carNames = cars.map { it.toString() }
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, carNames)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             carSpinner.adapter = adapter
 
             carSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel.selectCar(cars[position])
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                    val selectedCar = cars[position]
+                    viewModel.selectCar(selectedCar)
                 }
-
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
 
                 }
             }
-        }
+        })
+
 
         logButton.setOnClickListener {
             val kilometersStr = kilometersEditText.text.toString()
@@ -93,11 +77,6 @@ class ZalogujCestuFragment : Fragment() {
         }
     }
 
-    /**
-     * Uloženie stavu fragmentu
-     *
-     * @param outState
-     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 

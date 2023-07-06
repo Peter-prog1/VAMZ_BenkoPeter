@@ -1,6 +1,7 @@
 package com.example.spravcavozidiel.Databaza
 
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -17,8 +18,14 @@ interface AutoDao {
     @Query("SELECT * FROM cars")
     fun getAllCars(): List<Auto>
 
+    @Query("SELECT * FROM cars")
+    fun getAllCarsLive(): LiveData<List<Auto>>
+
+
     @Query("SELECT * FROM cars WHERE id = :carId")
     fun getCarById(carId: Int): Auto
+
+
 
     @Insert
     fun addCar(auto: Auto): Long
@@ -37,4 +44,5 @@ interface AutoDao {
      */
     @Query("DELETE FROM cars WHERE id = :carId")
     fun deleteCarById(carId: Int): Int
+
 }
